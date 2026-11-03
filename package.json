@@ -1,0 +1,62 @@
+{
+  "name": "react-native-background-location-pro-eval",
+  "version": "1.0.0",
+  "description": "Production-grade background location tracking for React Native (New Architecture). Drop-in TurboModule. Free evaluation build: full pipeline in development; production use requires a license. Source license via GitHub Sponsors.",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "prepack": "node scripts/assert-no-source-in-tarball.js"
+  },
+  "files": [
+    "src",
+    "ios/*.h",
+    "ios/*.m",
+    "ios/*.mm",
+    "ios/BgTrackKit.xcframework",
+    "android/build.gradle",
+    "android/src",
+    "android/libs/bgtrackkit.aar",
+    "react-native.config.js",
+    "react-native-background-location-pro-eval.podspec",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "react-native",
+    "ios",
+    "android",
+    "background",
+    "location",
+    "geolocation",
+    "tracking",
+    "turbomodule",
+    "new-architecture"
+  ],
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Punith M <punithm300@gmail.com>",
+  "homepage": "https://github.com/sponsors/126punith",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/126punith/react-native-background-location-pro-eval.git"
+  },
+  "bugs": {
+    "url": "https://github.com/126punith/react-native-background-location-pro-eval/issues"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "NativeLocationTrackerSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/specs",
+    "android": {
+      "javaPackageName": "com.bglocationdemo.tracking"
+    },
+    "ios": {
+      "modulesProvider": {
+        "LocationTracker": "RCTLocationTracker"
+      }
+    }
+  }
+}

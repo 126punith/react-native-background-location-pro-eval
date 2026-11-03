@@ -1,0 +1,40 @@
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+*.tgz
+*.tsbuildinfo
+
+# Build output and caches
+build/
+.gradle/
+.cxx/
+.kotlin/
+.build-xcframework/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+
+# Engine source and de-obfuscation maps never belong in this repo
+engine/
+android-engine/
+mapping.txt
+*.map
+
+# Secrets and credentials
+.npmrc
+.env
+.env.*
+local.properties
+*.keystore
+*.jks
+*.p8
+*.p12
+*.pem
+*.mobileprovision
