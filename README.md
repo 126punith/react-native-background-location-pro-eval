@@ -177,3 +177,10 @@ Email [punithm300@gmail.com](mailto:punithm300@gmail.com) with your GitHub usern
 ## License
 
 This evaluation build is covered by the [evaluation license](LICENSE). The paid editions are covered by the commercial source license on the [product page](https://github.com/126punith/react-native-background-location-pro#license).
+
+---
+
+## Topics
+
+`react-native` · `background-location` · `location-tracking` · `geolocation` · `gps-tracking` · `background-tracking` · `background-service` · `background-tasks` · `turbomodule` · `new-architecture` · `jsi` · `react-native-module` · `ios` · `android` · `swift` · `kotlin` · `offline-first` · `fleet-tracking` · `mobile-development` · `npm-package`
+
