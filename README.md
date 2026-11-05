@@ -91,6 +91,16 @@ const status = LocationTracker.getStatus();
 
 Your app needs the `Info.plist` keys `UIBackgroundModes`, `BGTaskSchedulerPermittedIdentifiers`, and the location and motion usage strings. The paid editions ship a complete setup guide, a backend ingestion server, and a live map.
 
+📖 **Full documentation:** [background-location-pro.vercel.app](https://background-location-pro.vercel.app) covers installation, Android and iOS setup, the API reference, offline sync, platform limitations and troubleshooting. To run it locally: `cd website && npm install && npm start`.
+
+🔗 **Vercel quick link:** [https://vercel.com/oauth/device?user_code=TPMR-LLKD](https://vercel.com/oauth/device?user_code=TPMR-LLKD)
+
+### How this package works (developer view)
+
+- Your app calls the typed TurboModule API (`startTracking`, `stopTracking`, `getStatus`, sync/profile methods).
+- Native Android/iOS layers keep collecting in background, persist points on-device first, then sync to your backend.
+- JS listeners (`onLocationUpdate`, `onSyncStatus`) reflect live state, but core tracking and retries continue natively even if JS is paused.
+
 ---
 
 ## 💎 What you get with a license
