@@ -17,7 +17,7 @@ Try the complete native pipeline free in your own app, on your own routes. When 
 
 ## 👋 From the creator of react-native-pdf-jsi
 
-I'm Punith Manthri, the author of [**react-native-pdf-jsi**](https://www.npmjs.com/package/react-native-pdf-jsi), the open-source JSI-accelerated PDF viewer for React Native. It has crossed **300k+ downloads on npm** and is used in production apps around the world.
+I'm Punith Manthri, the author of [**react-native-pdf-jsi**](https://www.npmjs.com/package/react-native-pdf-jsi), the open-source JSI-accelerated PDF viewer for React Native. It has crossed **390k+ downloads on npm** and is used in production apps around the world.
 
 [![npm version](https://img.shields.io/npm/v/react-native-pdf-jsi?style=for-the-badge&logo=npm&color=cb3837)](https://www.npmjs.com/package/react-native-pdf-jsi)
 [![total downloads](https://img.shields.io/npm/d18m/react-native-pdf-jsi?style=for-the-badge&logo=npm&color=cb3837)](https://www.npmjs.com/package/react-native-pdf-jsi)
@@ -93,7 +93,6 @@ Your app needs the `Info.plist` keys `UIBackgroundModes`, `BGTaskSchedulerPermit
 
 📖 **Full documentation:** [background-location-pro.vercel.app](https://background-location-pro.vercel.app) covers installation, Android and iOS setup, the API reference, offline sync, platform limitations and troubleshooting. To run it locally: `cd website && npm install && npm start`.
 
-🔗 **Vercel quick link:** [https://vercel.com/oauth/device?user_code=TPMR-LLKD](https://vercel.com/oauth/device?user_code=TPMR-LLKD)
 
 ### How this package works (developer view)
 
