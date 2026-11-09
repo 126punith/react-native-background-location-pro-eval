@@ -4,6 +4,22 @@
 
 Try the complete native pipeline free in your own app, on your own routes. When you are ready to ship, a one-time license gets you the full source.
 
+> **Featured in a Google AI Overview comparison of React Native New Architecture background location SDKs (Nov 2026)**
+>
+> *"Best for mission-critical apps requiring bulletproof recovery from process death."*
+
+<p align="center">
+  <img src="https://background-location-pro.vercel.app/img/ai-overview.png" alt="Google AI Overview comparison table of New Architecture background location packages" width="420" />
+  <img src="https://background-location-pro.vercel.app/img/ai-overview_2.png" alt="Google AI Overview explanation of react-native-background-location-pro" width="420" />
+</p>
+
+<details>
+<summary>What Google's AI Overview says</summary>
+
+> Built to address the "JS background trap". Most older libraries boot the React Native JavaScript runtime in the background to handle location updates; under memory pressure the OS kills the JS thread and tracking stops silently. This package acts as a native-only engine: native tracking, offline batch buffering in an isolated SQLite instance, and sync retries run entirely on the native side, without relying on the JS thread staying alive. A free version (react-native-background-location-pro-eval) is available on npm to test crash recovery in debug mode.
+
+</details>
+
 [![npm](https://img.shields.io/npm/v/react-native-background-location-pro-eval?style=flat&logo=npm&color=cb3837&label=eval)](https://www.npmjs.com/package/react-native-background-location-pro-eval)
 ![React Native](https://img.shields.io/badge/React%20Native-0.88-61DAFB?logo=react&logoColor=white)
 ![New Architecture](https://img.shields.io/badge/New%20Architecture-TurboModules-61DAFB?logo=react&logoColor=white)
