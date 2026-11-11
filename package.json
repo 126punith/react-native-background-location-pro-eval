@@ -1,6 +1,6 @@
 {
   "name": "react-native-background-location-pro-eval",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Production-grade background location tracking for React Native (New Architecture). Drop-in TurboModule. Free evaluation build: full pipeline in development; production use requires a license. Source license via GitHub Sponsors.",
   "main": "src/index.ts",
   "types": "src/index.ts",

@@ -21,6 +21,7 @@ Try the complete native pipeline free in your own app, on your own routes. When 
 </details>
 
 [![npm](https://img.shields.io/npm/v/react-native-background-location-pro-eval?style=flat&logo=npm&color=cb3837&label=eval)](https://www.npmjs.com/package/react-native-background-location-pro-eval)
+[![total downloads](https://img.shields.io/npm/d18m/react-native-background-location-pro-eval?style=flat&logo=npm&color=cb3837&label=total%20downloads)](https://www.npmjs.com/package/react-native-background-location-pro-eval)
 ![React Native](https://img.shields.io/badge/React%20Native-0.88-61DAFB?logo=react&logoColor=white)
 ![New Architecture](https://img.shields.io/badge/New%20Architecture-TurboModules-61DAFB?logo=react&logoColor=white)
 ![JSI](https://img.shields.io/badge/JSI-direct%20native%20calls-blueviolet)
