@@ -165,6 +165,8 @@ export function TrackingScreen() {
 }
 ```
 
+Background tracking is a hard problem. These hooks reduce it to a screen you can wire up in minutes. When you need tighter control — HTTP headers, geofences, schedules, the on-device queue, odometer, diagnostics — call the same `LocationTracker` APIs directly. The hooks sit on that module; you choose how much control you take.
+
 📖 **Hooks guide:** [background-location-pro.vercel.app/docs/react-hooks](https://background-location-pro.vercel.app/docs/react-hooks)
 
 📖 **Full documentation:** [background-location-pro.vercel.app](https://background-location-pro.vercel.app) covers installation, Android and iOS setup, the API reference, offline sync, platform limitations and troubleshooting. To run it locally: `cd website && npm install && npm start`.
