@@ -10,8 +10,10 @@ const path = require('node:path');
 const pkgDir = path.resolve(__dirname, '..');
 
 // The only source allowed to ship: the thin autolinking package stub. Autolinking discovers
-// modules by scanning source, so this one file cannot be precompiled.
-const ALLOWED_SOURCE = /^android\/src\/main\/java\/[A-Za-z0-9_/]*\.kt$/;
+// modules by scanning source, so this one file cannot be precompiled. Do not broaden this —
+// any other .kt under android/src would ship engine logic in the npm tarball.
+const ALLOWED_SOURCE =
+  /^android\/src\/main\/java\/com\/bglocationdemo\/tracking\/rn\/BackgroundLocationProPackage\.kt$/;
 
 // Each rule: what must never appear in the tarball, and why.
 const FORBIDDEN = [

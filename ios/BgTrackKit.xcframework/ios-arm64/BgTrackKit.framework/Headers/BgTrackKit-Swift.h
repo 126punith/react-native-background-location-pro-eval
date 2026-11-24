@@ -346,6 +346,7 @@ extern "C" {
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import Foundation;
 @import ObjectiveC;
 #endif
 
@@ -373,6 +374,8 @@ extern "C" {
 @protocol BGTrackingEventSink;
 @class NSString;
 @class NSDictionary;
+@class NSArray;
+@class NSNumber;
 /// Everything the <code>LocationTracker</code> TurboModule does, in Swift. JS only steers and observes;
 /// the pipeline runs in [LocationEngine] whether or not React is alive.
 /// Methods may be called from any thread; work that touches CoreLocation or UIKit hops to main.
@@ -384,29 +387,48 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BGTrackingCo
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 - (void)attach:(id <BGTrackingEventSink> _Nonnull)sink;
 - (void)detach:(id <BGTrackingEventSink> _Nonnull)sink;
-/// App-launch bootstrap the drop-in shim calls on <code>UIApplicationDidFinishLaunching</code>, so the host
-/// app needs no AppDelegate edits: registers the BGTask, reconnects the background upload
-/// session, and revives tracking if it was desired.
+/// Registers the BGTask, reconnects the background upload session, and revives tracking when
+/// it was previously desired.
 - (void)bootstrap;
-/// Called by the shim from <code>+load</code>.
+/// Declares the host runtime profile for evaluation gating.
 - (void)applyRuntimeProfile:(NSInteger)profile;
-/// Forwarded by the shim from <code>application(_:handleEventsForBackgroundURLSession:)</code>.
+/// Completes a background URL session handoff from the host application.
 - (void)handleBackgroundURLSession:(NSString * _Nonnull)identifier completion:(void (^ _Nonnull)(void))completion;
-- (void)startTracking:(NSString * _Nonnull)serverUrl;
-- (void)stopTracking;
+- (void)startTracking:(NSString * _Nonnull)serverUrl resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))reject;
+- (void)stopTracking:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
 /// Synchronous JSI call; reads only in-memory state and UserDefaults.
 - (NSDictionary * _Nonnull)status SWIFT_WARN_UNUSED_RESULT;
-- (void)setTrackingProfile:(NSString * _Nonnull)profile;
+- (void)setTrackingProfile:(NSString * _Nonnull)profile resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))reject;
 /// Android-only tier; iOS requests Motion & Fitness lazily from the adaptive profile.
-- (void)setMotionPermissionOptIn:(BOOL)enabled;
-- (void)setSyncPolicy:(double)batchSize maxBackoffMs:(double)maxBackoffMs maxAttempts:(double)maxAttempts;
-- (void)setDemoMode:(BOOL)enabled;
-- (void)syncNow;
+- (void)setMotionPermissionOptIn:(BOOL)enabled resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
+- (void)setSyncPolicy:(double)batchSize maxBackoffMs:(double)maxBackoffMs maxAttempts:(double)maxAttempts resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
+- (void)setDemoMode:(BOOL)enabled resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
+- (void)syncNow:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))reject;
 /// iOS has no battery-optimization exemption; Low Power Mode and Background App Refresh live in Settings.
 - (void)openSettings;
 - (void)requestLocationPermission:(BOOL)always;
 /// Called from <code>didFinishLaunching</code>, including headless relaunches by significant-change monitoring.
 - (void)resumeIfDesired:(NSString * _Nonnull)reason;
+- (void)getCurrentPosition:(double)timeoutMs maximumAgeMs:(double)maximumAgeMs resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))reject;
+- (NSDictionary * _Nonnull)queueStats SWIFT_WARN_UNUSED_RESULT;
+- (NSArray * _Nonnull)locations:(NSString * _Nonnull)status limit:(double)limit offset:(double)offset SWIFT_WARN_UNUSED_RESULT;
+/// Points owned by an in-flight background upload may still reach the server.
+- (NSInteger)destroyLocations SWIFT_WARN_UNUSED_RESULT;
+- (void)setPersistencePolicy:(double)maxDaysToPersist maxRecordsToPersist:(double)maxRecordsToPersist resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
+/// <code>{path, headers, params, disableAutoSyncOnCellular}</code>; missing keys reset to the default.
+- (void)setHttpConfig:(NSDictionary * _Nonnull)config resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))reject;
+- (void)validateServerUrl:(NSString * _Nonnull)url resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve;
+- (double)odometer SWIFT_WARN_UNUSED_RESULT;
+- (void)resetOdometer:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
+- (void)addGeofences:(NSArray * _Nonnull)geofences resolve:(void (^ _Nonnull)(NSNumber * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))reject;
+- (void)removeGeofences:(NSArray<NSString *> * _Nonnull)identifiers resolve:(void (^ _Nonnull)(NSNumber * _Nonnull))resolve;
+- (void)getGeofences:(void (^ _Nonnull)(NSArray * _Nonnull))resolve;
+- (void)setSchedule:(NSArray<NSString *> * _Nonnull)schedule resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))reject;
+- (void)startSchedule:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
+/// Leaves tracking in whatever state the schedule last put it.
+- (void)stopSchedule:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
+- (void)setVerboseLogging:(BOOL)enabled resolve:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve reject:(void (^ _Nonnull)(NSString * _Nonnull, NSString * _Nonnull))_;
+- (void)getDiagnostics:(void (^ _Nonnull)(NSDictionary * _Nonnull))resolve;
 @end
 
 /// Implemented by the ObjC++ TurboModule; receives payloads already shaped like the JS spec.
@@ -414,6 +436,12 @@ SWIFT_PROTOCOL_NAMED("TrackingEventSink")
 @protocol BGTrackingEventSink <NSObject>
 - (void)onLocationUpdate:(NSDictionary * _Nonnull)event;
 - (void)onSyncStatus:(NSDictionary * _Nonnull)event;
+- (void)onHttp:(NSDictionary * _Nonnull)event;
+- (void)onProviderChange:(NSDictionary * _Nonnull)event;
+- (void)onGeofence:(NSDictionary * _Nonnull)event;
+- (void)onTrackingStateChange:(NSDictionary * _Nonnull)event;
+- (void)onConfigChange:(NSDictionary * _Nonnull)event;
+- (void)onScheduleEdge:(NSDictionary * _Nonnull)event;
 @end
 
 #endif // defined(__OBJC__)

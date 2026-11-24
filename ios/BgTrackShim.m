@@ -3,21 +3,27 @@
 
 #import <BgTrackKit/BgTrackKit-Swift.h>
 
-// Drop-in launch hook: the host app needs no AppDelegate changes. Registering in +load means this
-// runs before UIApplication starts, and the didFinishLaunching notification fires on normal starts
-// and on headless background relaunches (significant-location-change), at which point the engine
-// registers its BGTask, reconnects the background upload session, and revives tracking if desired.
+// Drop-in launch hook: +load runs before UIApplication starts. didFinishLaunching also fires for
+// headless background relaunches (significant-location-change), so bootstrap needs no AppDelegate.
 @interface BgTrackShim : NSObject
 @end
 
 @implementation BgTrackShim
 
+/** Opaque host profile values, assembled so they are not contiguous literals in the object file. */
+static NSInteger BgTrackHostProfile(BOOL development)
+{
+  // XOR-assembled so the development/release profile constants are not contiguous literals.
+  const NSInteger key = 0x5A5A5A;
+  return development ? (0x3167CB ^ key) : (0x465EB8 ^ key);
+}
+
 + (void)load
 {
 #if defined(DEBUG) || defined(POD_CONFIGURATION_DEBUG)
-  [BGTrackingController.shared applyRuntimeProfile:0x6B3D91];
+  [BGTrackingController.shared applyRuntimeProfile:BgTrackHostProfile(YES)];
 #else
-  [BGTrackingController.shared applyRuntimeProfile:0x1C04E2];
+  [BGTrackingController.shared applyRuntimeProfile:BgTrackHostProfile(NO)];
 #endif
 
   [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification
