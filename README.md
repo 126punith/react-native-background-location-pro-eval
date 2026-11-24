@@ -108,8 +108,66 @@ const status = LocationTracker.getStatus();
 
 Your app needs the `Info.plist` keys `UIBackgroundModes`, `BGTaskSchedulerPermittedIdentifiers`, and the location and motion usage strings. The paid editions ship a complete setup guide, a backend ingestion server, and a live map.
 
-📖 **Full documentation:** [background-location-pro.vercel.app](https://background-location-pro.vercel.app) covers installation, Android and iOS setup, the API reference, offline sync, platform limitations and troubleshooting. To run it locally: `cd website && npm install && npm start`.
+## React hooks
 
+Most screens only need three hooks: permissions, start/stop/sync, and live points.
+
+```tsx
+import React from 'react';
+import {Button, SafeAreaView, Text} from 'react-native';
+import {
+  useLocationTracking,
+  useLocationUpdates,
+  usePermissions,
+} from 'react-native-background-location-pro-eval';
+
+const SERVER_URL = 'https://api.example.com';
+
+export function TrackingScreen() {
+  const permissions = usePermissions();
+  const {
+    isTracking,
+    isStarting,
+    isStopping,
+    status,
+    startTracking,
+    stopTracking,
+    syncNow,
+  } = useLocationTracking({serverUrl: SERVER_URL});
+  const {latestLocation, locations} = useLocationUpdates({maxItems: 20});
+
+  return (
+    <SafeAreaView style={{padding: 24, gap: 12}}>
+      <Text>{permissions.guidance.message}</Text>
+      {permissions.guidance.code === 'request_when_in_use' && (
+        <Button title="Allow location" onPress={permissions.requestWhenInUse} />
+      )}
+      {permissions.guidance.code === 'request_always' && (
+        <Button title="Allow Always" onPress={permissions.requestAlways} />
+      )}
+
+      <Button
+        title={isTracking ? 'Stop tracking' : 'Start tracking'}
+        disabled={isStarting || isStopping}
+        onPress={() => (isTracking ? stopTracking() : startTracking())}
+      />
+      <Button title="Sync now" onPress={() => syncNow()} />
+
+      <Text>
+        {status.pending} pending · {status.synced} synced
+        {latestLocation
+          ? ` · ${latestLocation.latitude.toFixed(5)}, ${latestLocation.longitude.toFixed(5)}`
+          : ''}
+      </Text>
+      <Text>{locations.length} points in this session</Text>
+    </SafeAreaView>
+  );
+}
+```
+
+📖 **Hooks guide:** [background-location-pro.vercel.app/docs/react-hooks](https://background-location-pro.vercel.app/docs/react-hooks)
+
+📖 **Full documentation:** [background-location-pro.vercel.app](https://background-location-pro.vercel.app) covers installation, Android and iOS setup, the API reference, offline sync, platform limitations and troubleshooting. To run it locally: `cd website && npm install && npm start`.
 
 ### How this package works (developer view)
 
